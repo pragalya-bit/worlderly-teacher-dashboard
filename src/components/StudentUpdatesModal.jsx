@@ -55,19 +55,37 @@ export function StudentUpdatesModal({ student, onClose }) {
           <Stat label="Last quiz" value={`${student.lastQuiz}%`} />
         </div>
 
-        {/* Recent updates */}
-        <h3 className="text-sm font-bold text-slate-700 mb-2">Recent updates</h3>
+        {/* Recent updates — the first `pending` are NEW */}
+        <h3 className="text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
+          Recent updates
+          {student.pending > 0 && (
+            <span className="bg-rose-500 text-white text-[0.6rem] font-bold px-2 py-0.5 rounded-full">
+              {student.pending} new
+            </span>
+          )}
+        </h3>
         <div className="space-y-2 mb-6">
           {updates.length === 0 && <p className="text-sm text-slate-400">No recent activity.</p>}
           {updates.map((u, i) => {
             const st = UPDATE_STYLE[u.type]
+            const isNew = i < (student.pending || 0)
             return (
-              <div key={i} className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3">
+              <div
+                key={i}
+                className={`flex items-center gap-3 rounded-2xl p-3 ${isNew ? 'bg-orange-50 ring-1 ring-orange-200' : 'bg-slate-50'}`}
+              >
                 <span className={`w-9 h-9 rounded-xl ${st.cls} flex items-center justify-center`}>
                   <i className={st.icon} />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm font-bold text-slate-800">{u.title}</div>
+                  <div className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                    {u.title}
+                    {isNew && (
+                      <span className="bg-rose-500 text-white text-[0.55rem] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wide">
+                        New
+                      </span>
+                    )}
+                  </div>
                   <div className="text-xs text-slate-500 truncate">{u.detail}</div>
                 </div>
                 {u.score != null && (

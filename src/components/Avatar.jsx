@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-// Generative (AI-style) avatar URL — consistent per seed, kid-friendly.
+// Generative (AI-style) avatar URL — consistent per seed, cheerful kid faces.
 export function avatarUrl(seed) {
-  return `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}&radius=50&backgroundColor=ffd5dc,ffdfbf,c0aede,d1d4f9,b6e3f4,c8f7d4`
+  return `https://api.dicebear.com/7.x/big-smile/svg?seed=${encodeURIComponent(seed)}&radius=50&backgroundColor=ffd5dc,ffdfbf,c0aede,d1d4f9,b6e3f4,c8f7d4`
 }
 
 // Renders a profile picture; falls back to a colored initial if the image fails.

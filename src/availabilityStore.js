@@ -30,14 +30,16 @@ export const DAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 export const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 // ── The store: weekly[weekday 0=Sun..6=Sat] = [{start,end}] decimal hours ──
+// Tuned so every scheduled class in CAL_DAYS falls inside an available (green)
+// band — classes are only ever booked within the mentor's availability.
 let weekly = [
   [], // Sun
-  [{ start: 9, end: 13 }, { start: 14, end: 18 }], // Mon
-  [{ start: 9, end: 13 }, { start: 14, end: 18 }], // Tue
-  [{ start: 9, end: 13 }, { start: 14, end: 18 }], // Wed
-  [{ start: 9, end: 13 }, { start: 14, end: 18 }], // Thu
-  [{ start: 9, end: 13 }, { start: 14, end: 18 }], // Fri
-  [{ start: 10, end: 13 }], // Sat
+  [{ start: 9, end: 12 }, { start: 14, end: 18 }], // Mon
+  [{ start: 9, end: 11 }, { start: 13, end: 18 }], // Tue
+  [{ start: 9, end: 12 }, { start: 13, end: 18 }], // Wed
+  [{ start: 10, end: 12 }, { start: 14, end: 18 }], // Thu
+  [{ start: 9, end: 11 }, { start: 13, end: 19 }], // Fri
+  [{ start: 10, end: 16 }], // Sat
 ]
 
 const listeners = new Set()

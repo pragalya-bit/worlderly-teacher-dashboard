@@ -233,6 +233,92 @@ export const STUDENT_UPDATES = {
   ],
 }
 
+// ── Strategy & Roadmap (matches the LEC/PTM strategy report PDF) ──
+export const PERFORMANCE_LEVELS = [
+  { id: 'great', label: 'Great performance', dot: 'bg-emerald-500', chip: 'bg-emerald-50 text-emerald-700 border-emerald-300' },
+  { id: 'mid', label: 'Mid performance', dot: 'bg-amber-500', chip: 'bg-amber-50 text-amber-700 border-amber-300' },
+  { id: 'weak', label: 'Weak performance', dot: 'bg-rose-500', chip: 'bg-rose-50 text-rose-700 border-rose-300' },
+]
+
+export const STRATEGY_PHASES = [
+  { id: 'immediate', name: 'Immediate Focus', icon: 'fa-solid fa-bolt', accent: 'text-rose-500', bar: 'bg-rose-400',
+    placeholder: 'Build broad foundational fluency — drill core reflexes (arithmetic, fractions, algebra).' },
+  { id: 'core', name: 'Ongoing Core Units', icon: 'fa-solid fa-layer-group', accent: 'text-sky-500', bar: 'bg-sky-400',
+    placeholder: 'Visual & contextual delivery — introduce topics with real-world scenarios first.' },
+  { id: 'midterm', name: 'Mid-Term Focus', icon: 'fa-solid fa-bullseye', accent: 'text-violet-500', bar: 'bg-violet-400',
+    placeholder: 'Decode IB question frameworks — dissect word problems, structure answers to criteria.' },
+  { id: 'examprep', name: 'Exam Prep Phase', icon: 'fa-solid fa-graduation-cap', accent: 'text-amber-500', bar: 'bg-amber-400',
+    placeholder: 'Timed criterion rigor — authentic board questions under timed conditions.' },
+]
+
+export function defaultPerformance(s) {
+  return s.lastQuiz >= 85 ? 'great' : s.lastQuiz >= 60 ? 'mid' : 'weak'
+}
+
+// ── Report card (matches student app "My Portfolio") ──
+export const FEEDBACK_TAGS = [
+  'Focused', 'Great participation', 'Improving', 'Needs practice',
+  'Creative thinker', 'Confident', 'Hardworking', 'Asks good questions',
+]
+
+export const REPORT_BADGES = [
+  { icon: 'fa-solid fa-bolt', label: 'Quick Solver', grad: 'from-amber-400 to-orange-500' },
+  { icon: 'fa-solid fa-brain', label: 'Math Master', grad: 'from-blue-500 to-indigo-500' },
+  { icon: 'fa-solid fa-trophy', label: 'Quiz Champ', grad: 'from-fuchsia-500 to-pink-500' },
+  { icon: 'fa-solid fa-fire', label: 'Streak Star', grad: 'from-rose-500 to-orange-500' },
+]
+
+// 4 questions sent to the student each class; answers reflect in the report card.
+export const CLASS_QUESTIONS = [
+  'Did you understand today’s topic?',
+  'What was the most interesting part?',
+  'Rate your confidence (1–5)',
+  'Any doubts for the next class?',
+]
+
+// Past class sessions for the report-card calendar. Each has 4 answered
+// questions and (maybe) voice recordings. `rec:false` => teacher hasn't
+// uploaded a voice note for that class yet → reminder.
+export function classSessionsFor(s) {
+  const base = [
+    { day: 9, date: '9 Jun', topic: 'Variables', rec: true },
+    { day: 11, date: '11 Jun', topic: 'Simple Equations', rec: true },
+    { day: 13, date: '13 Jun', topic: 'Balancing', rec: s.id !== 's4' },
+    { day: 16, date: '16 Jun', topic: 'Word Problems', rec: false },
+  ]
+  const conf = String(Math.max(1, Math.min(5, Math.round(s.lastQuiz / 20))))
+  return base.map((c, i) => ({
+    ...c,
+    answers: [
+      'Yes, I understood it well 🎯',
+      s.subject === 'Science' ? `The ${c.topic.toLowerCase()} demo was cool!` : `Liked the ${c.topic.toLowerCase()} examples`,
+      conf,
+      i === base.length - 1 && s.status === 'needs-help' ? 'Need a little more practice 🙏' : 'No doubts — ready!',
+    ],
+    recordings: c.rec ? [{ id: `${s.id}-${c.day}`, label: `After Class · ${c.topic}`, dur: '0:38', date: c.date }] : [],
+  }))
+}
+
+export function classAnswersFor(s) {
+  return [
+    'Yes! The examples made it click. 🎯',
+    s.subject === 'Science' ? 'The experiment demo was so cool!' : 'Solving the word problems was fun.',
+    String(Math.max(1, Math.min(5, Math.round(s.lastQuiz / 20)))),
+    s.status === 'needs-help' ? 'Can we revise this once more next class?' : 'No doubts — ready for the next one!',
+  ]
+}
+
+// Quiz/assignment results for the report card, built from recent activity.
+export function reportRecordsFor(s) {
+  const grads = ['from-purple-500 to-fuchsia-500', 'from-blue-500 to-cyan-500', 'from-emerald-500 to-teal-500']
+  const recs = [{ title: 'Latest Quiz', score: `${s.lastQuiz}%` }]
+  ;(STUDENT_UPDATES[s.id] || [])
+    .filter((u) => u.type === 'quiz' && u.score != null)
+    .forEach((u) => recs.push({ title: u.detail, score: `${u.score}%` }))
+  if (recs.length < 3) recs.push({ title: 'Class Assignment', score: 'Submitted' })
+  return recs.slice(0, 3).map((r, i) => ({ ...r, grad: grads[i % grads.length] }))
+}
+
 // When each student is free for classes (weekday 0=Sun..6=Sat + times).
 // Drives the "student's available slots" picker when assigning a class.
 export const STUDENT_AVAIL_SLOTS = {
