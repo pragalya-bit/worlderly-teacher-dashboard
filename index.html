@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worlderly · Coach Dashboard</title>
+
+    <!-- Quicksand (same font as the student dashboard) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome 6 Free (only Free icons are used) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Tailwind Play CDN — perfect for a self-contained mockup -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Quicksand', 'system-ui', 'sans-serif'] },
+          },
+        },
+      }
+    </script>
+
+    <style>
+      /* Match the student dashboard's global rules exactly */
+      * {
+        font-family: 'Quicksand', sans-serif !important;
+      }
+      /* Let Font Awesome glyphs survive the Quicksand override */
+      [class^='fa-'],
+      [class*=' fa-'] {
+        font-family: 'Font Awesome 6 Free' !important;
+      }
+      .fa-brands {
+        font-family: 'Font Awesome 6 Brands' !important;
+      }
+      body {
+        background-color: #fdf8f4; /* page cream */
+        color: #1e293b;
+        -webkit-font-smoothing: antialiased;
+      }
+      /* Soft scrollbars to keep the playful feel */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #fed7aa;
+        border-radius: 999px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
