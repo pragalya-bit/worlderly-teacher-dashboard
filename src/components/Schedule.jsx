@@ -171,7 +171,7 @@ function EventBlock({ e }) {
   const isTrial = e.type === 'Trial'
   return (
     <div
-      className={`group absolute inset-x-1.5 rounded-lg border-2 border-dotted border-white/80 px-2 py-1 text-white overflow-hidden cursor-pointer shadow-sm ${TYPE_STYLE[e.type]}`}
+      className={`group absolute inset-x-1.5 rounded-lg border-2 border-dotted border-white/80 px-2.5 py-2 text-white overflow-hidden cursor-pointer shadow-sm flex flex-col justify-center ${TYPE_STYLE[e.type]}`}
       style={{ top: top + 2, height: height - 4 }}
     >
       {isTrial && (
@@ -179,15 +179,15 @@ function EventBlock({ e }) {
           Trial class
         </span>
       )}
-      <div className={`text-[0.72rem] font-bold leading-snug ${isTrial ? 'pr-14' : ''}`}>{e.title}</div>
-      <div className="text-[0.6rem] opacity-90">
+      <div className={`text-[0.72rem] font-bold leading-tight truncate ${isTrial ? 'pr-16' : ''}`}>{e.title}</div>
+      <div className="text-[0.6rem] opacity-90 truncate">
         {fmt(e.start)} – {fmt(e.end)}
       </div>
-      <div className="text-[0.62rem] font-semibold leading-snug mt-0.5">
+      <div className="text-[0.62rem] font-semibold leading-tight truncate mt-0.5">
         <i className="fa-solid fa-user text-[0.55rem] mr-1 opacity-80" />
         {e.who}
       </div>
-      <div className="text-[0.58rem] opacity-90">
+      <div className="text-[0.58rem] opacity-90 truncate">
         {e.subject} · {e.board}
       </div>
 

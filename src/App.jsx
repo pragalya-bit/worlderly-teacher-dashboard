@@ -6,6 +6,7 @@ import { Availability } from './components/Availability.jsx'
 import { Students } from './components/Students.jsx'
 import { Checkpoints } from './components/Checkpoints.jsx'
 import { Library } from './components/Library.jsx'
+import { Training } from './components/Training.jsx'
 import { Messages } from './components/Messages.jsx'
 import { Earnings } from './components/Earnings.jsx'
 import { Settings } from './components/Settings.jsx'
@@ -19,6 +20,7 @@ const PANELS = {
   students: Students,
   checkpoints: Checkpoints,
   library: Library,
+  training: Training,
   messages: Messages,
   earnings: Earnings,
   settings: Settings,
@@ -80,7 +82,7 @@ function TopBar() {
           <i className="fa-solid fa-bell" />
           <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-orange-500 ring-2 ring-white" />
         </button>
-        <Avatar src={avatarUrl(COACH.name)} initial={COACH.initial} color="bg-orange-600" className="w-9 h-9 rounded-full text-sm" />
+        <Avatar photo="/kids/mentor.jpg" src={avatarUrl(COACH.name)} initial={COACH.initial} color="bg-orange-600" className="w-9 h-9 rounded-full text-sm" />
       </div>
     </header>
   )

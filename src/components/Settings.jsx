@@ -51,7 +51,7 @@ export function Settings() {
               </div>
 
               <div className="flex items-center gap-4 mb-6">
-                <Avatar src={avatarUrl(COACH.name)} initial={COACH.initial} color="bg-orange-600" className="w-16 h-16 rounded-2xl text-2xl" />
+                <Avatar photo="/kids/mentor.jpg" src={avatarUrl(COACH.name)} initial={COACH.initial} color="bg-orange-600" className="w-16 h-16 rounded-2xl text-2xl" />
                 {editing && (
                   <button className="text-sm font-semibold text-orange-600 hover:text-orange-700">
                     <i className="fa-solid fa-camera mr-1.5" /> Change photo
@@ -64,6 +64,7 @@ export function Settings() {
                 <Field label="Title" value={COACH.title} editing={editing} />
                 <Field label="Email" value={COACH.email} editing={editing} />
                 <Field label="Phone" value={COACH.phone} editing={editing} />
+                <Field label="Date of birth" value={COACH.dob} editing={editing} />
                 <Field label="Experience" value={COACH.experience} editing={editing} />
                 <Field label="Specialisation" value={COACH.experienceDetail} editing={editing} />
               </div>

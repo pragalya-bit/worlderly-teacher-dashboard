@@ -8,6 +8,7 @@ export const NAV_ITEMS = [
   { id: 'students', icon: 'fa-solid fa-user-group', label: 'My Students' },
   { id: 'checkpoints', icon: 'fa-solid fa-clipboard-check', label: 'Checkpoints', badge: 4 },
   { id: 'library', icon: 'fa-solid fa-book-open', label: 'Worlderly Library' },
+  { id: 'training', icon: 'fa-solid fa-graduation-cap', label: 'Training' },
   { id: 'messages', icon: 'fa-solid fa-comment-dots', label: 'Messages', badge: 3 },
   { id: 'earnings', icon: 'fa-solid fa-wallet', label: 'Earnings' },
   { id: 'settings', icon: 'fa-solid fa-gear', label: 'Settings' },
@@ -56,7 +57,7 @@ export function Sidebar({ activeTab, onSelect }) {
       </div>
 
       <div className="flex items-center space-x-3 border-t border-slate-100 pt-4">
-        <Avatar src={avatarUrl(COACH.name)} initial={COACH.initial} color="bg-orange-600" className="w-10 h-10 rounded-full text-base" />
+        <Avatar photo="/kids/mentor.jpg" src={avatarUrl(COACH.name)} initial={COACH.initial} color="bg-orange-600" className="w-10 h-10 rounded-full text-base" />
         <div className="min-w-0">
           <div className="font-bold text-sm text-slate-800 truncate">Ms. {COACH.name.split(' ')[0]}</div>
           <div className="text-xs text-slate-400 font-medium truncate">{COACH.title}</div>

@@ -77,7 +77,7 @@ export function ReportCard({ student, onClose }) {
             <div className="absolute -top-16 -left-12 w-48 h-48 bg-fuchsia-400 rounded-full blur-[70px] opacity-20" />
             <div className="absolute -bottom-16 -right-12 w-48 h-48 bg-amber-400 rounded-full blur-[70px] opacity-20" />
             <div className="relative z-10 rounded-full p-1 bg-gradient-to-br from-fuchsia-500 via-violet-500 to-blue-500 shadow-lg">
-              <Avatar src={avatarUrl(student.name)} initial={student.initial} color={student.color} className="w-24 h-24 rounded-full border-4 border-white" />
+              <Avatar photo={`/kids/${student.id}.jpg`} src={avatarUrl(student.name)} initial={student.initial} color={student.color} className="w-24 h-24 rounded-full border-4 border-white" />
             </div>
             <div className="relative z-10 text-center sm:text-left">
               <h1 className="text-2xl font-black text-slate-900">{student.name}</h1>

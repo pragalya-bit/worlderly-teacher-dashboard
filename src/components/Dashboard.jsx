@@ -110,6 +110,7 @@ function StudentsCorner({ onOpen, onSeeAll }) {
           >
             <span className="relative">
               <Avatar
+                photo={`/kids/${s.id}.jpg`}
                 src={avatarUrl(s.name)}
                 initial={s.initial}
                 color={s.color}
@@ -133,6 +134,7 @@ function StudentsCorner({ onOpen, onSeeAll }) {
 
 function FeaturedClass({ cls, onMessage }) {
   const initial = cls.student?.[0] || 'S'
+  const matched = STUDENTS.find((st) => st.name.split(' ')[0] === cls.student?.split(' ')[0])
   return (
     <div className="relative overflow-hidden rounded-3xl p-6 text-white shadow-md bg-gradient-to-br from-orange-500 to-orange-600">
       <div className="absolute -right-8 -top-10 w-44 h-44 rounded-full bg-white/10" />
@@ -168,6 +170,7 @@ function FeaturedClass({ cls, onMessage }) {
         {/* Right: student profile (no background box) */}
         <div className="shrink-0 sm:w-44 flex flex-row sm:flex-col items-center text-left sm:text-center gap-3 sm:pr-2">
           <Avatar
+            photo={matched ? `/kids/${matched.id}.jpg` : undefined}
             src={avatarUrl(cls.student)}
             initial={initial}
             color="bg-white/25"

@@ -10,6 +10,7 @@ export const COACH = {
   rating: 4.9,
   email: 'lavanya@worlderly.com',
   phone: '+91 98••• •••12',
+  dob: '14 Mar 1996',
   experience: '6 years',
   experienceDetail: 'Math & Science coaching · CBSE / IGCSE',
   resume: 'Lavanya_Raj_Resume.pdf',
@@ -299,6 +300,35 @@ export function classSessionsFor(s) {
   }))
 }
 
+// Detailed work for a past class: assignment & worksheet (teacher questions +
+// student answers + marks) and a quiz with automated corrections.
+export function classWorkFor(topic, scorePct) {
+  const assignment = [
+    { q: `Solve for x:  2x + 5 = 17`, a: 'x = 6', marks: 5, total: 5 },
+    { q: `Simplify:  3(a + 4) − 2a`, a: 'a + 12', marks: 4, total: 5 },
+  ]
+  const worksheet = [
+    { q: `Find x:  x ÷ 3 = 9`, a: 'x = 27', marks: 5, total: 5 },
+    { q: `Is 7 a solution of  x + 5 = 12 ?`, a: 'Yes', marks: 3, total: 5 },
+  ]
+  const base = [
+    { q: '2x = 10,  x = ?', correctAns: '5' },
+    { q: 'x + 3 = 8,  x = ?', correctAns: '5' },
+    { q: '4x = 12,  x = ?', correctAns: '3' },
+    { q: '10 − x = 6,  x = ?', correctAns: '4' },
+  ]
+  const correctCount = Math.max(0, Math.min(base.length, Math.round((scorePct / 100) * base.length)))
+  const items = base.map((it, i) => {
+    const ok = i < correctCount
+    return { q: it.q, correctAns: it.correctAns, studentAns: ok ? it.correctAns : String(Number(it.correctAns) + 1), ok }
+  })
+  return {
+    assignment,
+    worksheet,
+    quiz: { score: Math.round((correctCount / base.length) * 100), correct: correctCount, total: base.length, items },
+  }
+}
+
 export function classAnswersFor(s) {
   return [
     'Yes! The examples made it click. 🎯',
@@ -524,4 +554,34 @@ export const ACCENT = {
   purple: { bg: 'bg-purple-50', text: 'text-purple-600', ring: 'ring-purple-100', solid: 'bg-purple-500' },
   amber: { bg: 'bg-amber-50', text: 'text-amber-600', ring: 'ring-amber-100', solid: 'bg-amber-500' },
   emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', ring: 'ring-emerald-100', solid: 'bg-emerald-500' },
+}
+
+// ── Teacher Training (board mastery courses) ──
+// Same modules across boards so every teacher delivers classes the same way
+// (structure, gestures, tone). Completing modules raises the training % and is
+// reported to the SME.
+const trainingModules = (board) => [
+  { id: 'm1', title: 'Welcome & the Worlderly Way', dur: '6:12', desc: 'Our teaching philosophy and what makes a Worlderly class feel magical.' },
+  { id: 'm2', title: `${board} Curriculum Deep-Dive`, dur: '12:40', desc: `How the ${board} syllabus is structured and what examiners look for.` },
+  { id: 'm3', title: 'The Worlderly Lesson Structure', dur: '9:05', desc: 'Hook → concept → practice → checkpoint — the flow every class follows.' },
+  { id: 'm4', title: 'Gestures, Tone & On-Camera Presence', dur: '8:24', desc: 'Body language, voice and gestures that keep young learners engaged.' },
+  { id: 'm5', title: 'Assessment & Feedback Standards', dur: '7:30', desc: 'Grading worksheets, quizzes and giving consistent, kind feedback.' },
+  { id: 'm6', title: 'Live Class Simulation & Certification', dur: '14:18', desc: 'Teach a mock class and get certified for this board.' },
+]
+
+// `logo` points to a board logo you drop in public/boards/ (falls back to `icon`).
+export const TRAINING = [
+  { id: 'ib', name: 'IB Mastery', board: 'International Baccalaureate', icon: 'fa-solid fa-earth-americas', logo: '/boards/ib.png', tint: 'indigo', modules: trainingModules('IB') },
+  { id: 'cbse', name: 'CBSE Mastery', board: 'Central Board (India)', icon: 'fa-solid fa-book-open', logo: '/boards/cbse.png', tint: 'orange', modules: trainingModules('CBSE') },
+  { id: 'igcse', name: 'IGCSE Mastery', board: 'Cambridge IGCSE', icon: 'fa-solid fa-globe', logo: '/boards/igcse.png', tint: 'sky', modules: trainingModules('IGCSE') },
+  { id: 'icse', name: 'ICSE Mastery', board: 'Indian Certificate (ICSE)', icon: 'fa-solid fa-graduation-cap', logo: '/boards/icse.png', tint: 'emerald', modules: trainingModules('ICSE') },
+  { id: 'moe', name: 'MOE Mastery', board: 'Singapore MOE', icon: 'fa-solid fa-flag', logo: '/boards/moe.png', tint: 'rose', modules: trainingModules('MOE') },
+]
+
+export const TRAINING_TINT = {
+  indigo: { bg: 'bg-indigo-50', text: 'text-indigo-600', solid: 'bg-indigo-500', bar: 'bg-indigo-500', grad: 'from-indigo-500 to-violet-500' },
+  orange: { bg: 'bg-orange-50', text: 'text-orange-600', solid: 'bg-orange-500', bar: 'bg-orange-500', grad: 'from-orange-500 to-amber-500' },
+  sky: { bg: 'bg-sky-50', text: 'text-sky-600', solid: 'bg-sky-500', bar: 'bg-sky-500', grad: 'from-sky-500 to-cyan-500' },
+  emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', solid: 'bg-emerald-500', bar: 'bg-emerald-500', grad: 'from-emerald-500 to-teal-500' },
+  rose: { bg: 'bg-rose-50', text: 'text-rose-600', solid: 'bg-rose-500', bar: 'bg-rose-500', grad: 'from-rose-500 to-pink-500' },
 }

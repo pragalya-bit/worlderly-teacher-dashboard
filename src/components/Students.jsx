@@ -90,7 +90,7 @@ function StudentCard({ s, onMessage, onEditJourney, onReport }) {
   return (
     <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-center gap-3">
-        <Avatar src={avatarUrl(s.name)} initial={s.initial} color={s.color} className="w-12 h-12 rounded-2xl text-lg" />
+        <Avatar photo={`/kids/${s.id}.jpg`} src={avatarUrl(s.name)} initial={s.initial} color={s.color} className="w-12 h-12 rounded-2xl text-lg" />
         <div className="min-w-0 flex-1">
           <div className="font-bold text-slate-800 truncate">{s.name}</div>
           <div className="text-xs text-slate-400 font-medium">{s.grade} · {s.subject}</div>
@@ -164,7 +164,7 @@ function StudentCard({ s, onMessage, onEditJourney, onReport }) {
           onClick={onEditJourney}
           className="flex items-center justify-center gap-2 rounded-full border border-orange-200 text-orange-600 hover:bg-orange-50 transition-colors text-xs font-bold py-2.5"
         >
-          <i className="fa-solid fa-map-location-dot" /> Journey map
+          <i className="fa-solid fa-map-location-dot" /> Edit journey map
         </button>
         <button
           onClick={onReport}
