@@ -25,6 +25,7 @@ export const STATS = [
   { id: 'today', icon: 'fa-solid fa-video', label: 'Classes Today', value: '5', delta: '2 done · 3 to go', accent: 'sky' },
   { id: 'hours', icon: 'fa-solid fa-clock', label: 'Hours This Week', value: '18.5', delta: 'of 22 planned', accent: 'purple' },
   { id: 'rating', icon: 'fa-solid fa-star', label: 'Avg. Rating', value: '4.9', delta: 'from 132 reviews', accent: 'amber' },
+  { id: 'attendance', icon: 'fa-solid fa-calendar-check', label: 'Attendance Rate', value: '94%', delta: 'across your students', accent: 'emerald' },
 ]
 
 // Today's teaching schedule. status: 'done' | 'live' | 'upcoming'

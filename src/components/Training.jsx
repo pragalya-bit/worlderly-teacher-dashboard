@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TRAINING, TRAINING_TINT } from '../data.js'
+
+let _cid = 0
 
 // Board logo (from public/boards/) with graceful fallback to the FA icon.
 function BoardLogo({ board, box, iconText }) {
@@ -132,12 +134,19 @@ function CourseView({ board, done, pct, onBack, onComplete }) {
   const [currentId, setCurrentId] = useState(firstIncomplete.id)
   const current = board.modules.find((m) => m.id === currentId)
   const idx = board.modules.findIndex((m) => m.id === currentId)
-  const isDone = done.includes(current.id)
 
-  function completeAndAdvance() {
-    onComplete(current.id)
-    const next = board.modules[idx + 1]
-    if (next) setCurrentId(next.id)
+  // Viewing a module marks it complete (no manual button anymore).
+  useEffect(() => {
+    onComplete(currentId)
+  }, [currentId, onComplete])
+
+  // Doubts the teacher sends to the SME (per board, local to this session).
+  const [draft, setDraft] = useState('')
+  const [doubts, setDoubts] = useState([])
+  function sendDoubt() {
+    if (!draft.trim()) return
+    setDoubts((prev) => [{ id: _cid++, text: draft.trim(), module: current.title }, ...prev])
+    setDraft('')
   }
 
   return (
@@ -189,28 +198,47 @@ function CourseView({ board, done, pct, onBack, onComplete }) {
           <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm">
             <h2 className="text-lg font-bold text-slate-800">{current.title}</h2>
             <p className="text-sm text-slate-500 mt-1">{current.desc}</p>
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              {isDone ? (
-                <span className="flex items-center gap-2 bg-emerald-50 text-emerald-700 text-sm font-bold px-5 py-2.5 rounded-full">
-                  <i className="fa-solid fa-circle-check" /> Completed
-                </span>
-              ) : (
-                <button
-                  onClick={completeAndAdvance}
-                  className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 transition-colors text-white text-sm font-bold px-5 py-2.5 rounded-full shadow-sm shadow-orange-100"
-                >
-                  <i className="fa-solid fa-check" /> Mark complete
-                </button>
-              )}
-              {board.modules[idx + 1] && (
-                <button
-                  onClick={() => setCurrentId(board.modules[idx + 1].id)}
-                  className="flex items-center gap-2 border border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600 transition-colors text-sm font-bold px-5 py-2.5 rounded-full"
-                >
-                  Next module <i className="fa-solid fa-arrow-right" />
-                </button>
-              )}
+          </div>
+
+          {/* Doubts → SME */}
+          <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm">
+            <h3 className="font-bold text-slate-800 flex items-center gap-2">
+              <i className="fa-solid fa-comments text-orange-500" /> Doubts & comments
+            </h3>
+            <p className="text-xs text-slate-400 mt-0.5 mb-3">
+              Stuck on something in this module? Send it to your SME and they’ll get back to you.
+            </p>
+            <div className="flex items-end gap-2">
+              <textarea
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                rows={2}
+                placeholder={`Ask a doubt about "${current.title}"…`}
+                className="flex-1 rounded-2xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-orange-300 resize-none"
+              />
+              <button
+                onClick={sendDoubt}
+                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 transition-colors text-white text-sm font-bold px-4 py-2.5 rounded-full shadow-sm shadow-orange-100 shrink-0"
+              >
+                <i className="fa-solid fa-paper-plane" /> Send
+              </button>
             </div>
+
+            {doubts.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {doubts.map((d) => (
+                  <div key={d.id} className="rounded-2xl bg-slate-50 p-3">
+                    <div className="text-sm text-slate-700">{d.text}</div>
+                    <div className="flex items-center gap-2 mt-1.5 text-[0.65rem] font-semibold">
+                      <span className="text-slate-400">on {d.module}</span>
+                      <span className="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                        <i className="fa-solid fa-paper-plane mr-1" /> Sent to SME
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

@@ -26,7 +26,7 @@ export function Dashboard({ onSelect }) {
       </header>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {STATS.map((s) => {
           const a = ACCENT[s.accent]
           return (
